@@ -1,0 +1,17 @@
+meta {
+  name: Update Todo
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{base_url}}/todos/{{todo_id}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "status": "complete"
+  }
+}

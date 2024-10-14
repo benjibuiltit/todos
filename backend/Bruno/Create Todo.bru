@@ -1,0 +1,23 @@
+meta {
+  name: Create Todo
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/todos
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "My Todo",
+    "description": "A little more about what needs doing."
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  bru.setEnvVar("todo_id", data.id);
+}

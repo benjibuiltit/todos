@@ -1,0 +1,23 @@
+meta {
+  name: Delete Todo
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{base_url}}/todos/{{todo_id}}
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "title": "My Todo",
+    "description": "A little more about what needs doing."
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  bru.setEnvVar("todo_id", data.id);
+}
