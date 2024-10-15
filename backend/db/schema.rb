@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_14_133029) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_15_002147) do
   create_table "todos", force: :cascade do |t|
     t.text "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
+    t.date "due_date"
   end
 end
