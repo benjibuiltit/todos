@@ -48,12 +48,21 @@ export function SetTodo({
 
   if (todo) {
     if (!date && todo.dueDate) setDate(todo.dueDate);
-    if (!description) setDescription(todo.description);
-    if (!title) setTitle(todo.title);
+    if (!description && todo.description) setDescription(todo.description);
+    if (!title && todo.title) setTitle(todo.title);
   }
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) return;
+
+    // The datepicker component sets the time to 00:00:00. We want to keep the time of the current date.
+    const now = new Date();
+    date.setHours(
+      now.getHours(),
+      now.getMinutes(),
+      now.getSeconds(),
+      now.getMilliseconds()
+    );
     setDate(date);
     setIsDatePickerOpen(false);
   };

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { SetTodo } from "@/components/todos/SetTodo";
 import { useToast } from "@/hooks/use-toast";
-import { deleteTodo } from "@/api";
+import { deleteTodo, updateTodo } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function TodoItem({
@@ -41,7 +41,34 @@ export function TodoItem({
     },
   });
 
-  function sameDay(d1, d2) {
+  const setStatusMutation = useMutation({
+    mutationFn: updateTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Failed to update todo.",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  function toggleStatus() {
+    switch (status) {
+      case "complete":
+        setStatusMutation.mutate({ id, status: "pending" });
+        break;
+      case "pending":
+        setStatusMutation.mutate({ id, status: "complete" });
+        break;
+      default:
+        console.error("Unrecognized status");
+    }
+  }
+
+  function sameDay(d1: Date, d2: Date) {
     return (
       d1.getFullYear() <= d2.getFullYear() &&
       d1.getMonth() <= d2.getMonth() &&
@@ -51,7 +78,7 @@ export function TodoItem({
 
   return (
     <div className="todo-row m-4 flex flex-initial">
-      <button className="todo-action mr-4">
+      <button className="todo-action mr-4" onClick={toggleStatus}>
         <div className="text-gray-300">
           {status === "complete" ? <Circle fill="#111" /> : <Circle />}
         </div>

@@ -17,7 +17,7 @@ export const createTodo = async function(todo: any) {
 }
 
 export const updateTodo = async function(todo: any) {
-    const { id, ...body } = todo
+    const { id, _createdAt, _updatedAt, ...body } = todo
     return client.put(`/todos/${id}`, body)
 }
 
