@@ -65,7 +65,7 @@ export function TodoItem({
               id: id,
               title: title,
               description: description,
-              dueDate: new Date(dueDate),
+              dueDate: dueDate ? new Date(dueDate) : undefined,
             }}
           >
             <button>

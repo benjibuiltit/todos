@@ -43,7 +43,7 @@ export default function Todos() {
     });
 
   const sortedTodos = filteredTodos?.sort((a, b) => {
-    return new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
+    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
   });
 
   return (

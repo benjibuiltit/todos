@@ -13,14 +13,12 @@ export const getTodos = async function() {
 }
 
 export const createTodo = async function(todo: any) {
-    todo.dueDate = todo.dueDate.toISOString()
     return client.post('/todos', todo)
 }
 
 export const updateTodo = async function(todo: any) {
-    const { id, ...rest } = todo
-    todo.dueDate = todo.dueDate.toISOString()
-    return client.put(`/todos/${id}`, rest)
+    const { id, ...body } = todo
+    return client.put(`/todos/${id}`, body)
 }
 
 export const deleteTodo = async function(id: number) {

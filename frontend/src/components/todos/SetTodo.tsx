@@ -34,7 +34,7 @@ export function SetTodo({
         id: number;
         title: string;
         description: string;
-        dueDate: Date;
+        dueDate: Date | undefined;
       }
     | undefined;
 }) {
@@ -47,9 +47,9 @@ export function SetTodo({
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   if (todo) {
-    if (todo.dueDate != date) setDate(todo.dueDate);
-    if (todo.description != description) setDescription(todo.description);
-    if (todo.title != title) setTitle(todo.title);
+    if (!date && todo.dueDate) setDate(todo.dueDate);
+    if (!description) setDescription(todo.description);
+    if (!title) setTitle(todo.title);
   }
 
   const handleDateSelect = (date: Date | undefined) => {
