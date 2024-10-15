@@ -41,6 +41,14 @@ export function TodoItem({
     },
   });
 
+  function sameDay(d1, d2) {
+    return (
+      d1.getFullYear() <= d2.getFullYear() &&
+      d1.getMonth() <= d2.getMonth() &&
+      d1.getDate() <= d2.getDate()
+    );
+  }
+
   return (
     <div className="todo-row m-4 flex flex-initial">
       <button className="todo-action mr-4">
@@ -55,7 +63,13 @@ export function TodoItem({
         <p className="text-muted-foreground text-ellipsis">{description}</p>
         <div className="flex text-muted-foreground text-sm">
           {dueDate && (
-            <p className="text-muted-foreground">
+            <p
+              className={
+                sameDay(new Date(dueDate), new Date())
+                  ? "text-destructive"
+                  : "text-muted-foreground"
+              }
+            >
               {new Intl.DateTimeFormat().format(new Date(dueDate))}
             </p>
           )}
