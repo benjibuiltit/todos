@@ -21,7 +21,7 @@ import { StatusFilters } from "@/components/todos/StatusFilters";
 import { useState } from "react";
 
 export default function Todos() {
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("pending");
   const [searchTerm, setSearchTerm] = useState("");
   const todosQuery = useQuery({
     queryKey: ["todos"],
