@@ -23,3 +23,5 @@ A Docker Compose stack is also utilized for local infrastructure and both the fr
 10. Start the client `npm run dev`
 
 If all went well, you should be presented with a localhost address which you can navigate to and begin developing on the app.
+
+This app is deployed on [Railway](https://railway.app/). Prod deploys take place with changes on the `main` branch. A watcher is in place to deploy the frontend and/or backend respectively based on which files have changed. The front end build is a static file distribution served via a Caddy server.
