@@ -7,14 +7,16 @@ meta {
 post {
   url: {{base_url}}/todos
   body: json
-  auth: none
+  auth: inherit
 }
 
 body:json {
   {
-    "title": "My Todo",
-    "description": "A little more about what needs doing.",
-    "dueDate": "2024-10-15T16:13:36.294Z"
+    "todo": {
+       "title": "My Todo",
+      "description": "A little more about what needs doing.",
+      "dueDate": "2024-10-15T16:13:36.294Z" 
+    }
   }
 }
 

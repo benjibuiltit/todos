@@ -1,0 +1,25 @@
+meta {
+  name: Create User
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{base_url}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user": {
+       "username": "{{username}}",
+       "password": "{{password}}"
+    }
+  }
+}
+
+body:multipart-form {
+  username: benjibuiltit
+  password: picklesandicing
+}

@@ -7,17 +7,19 @@ meta {
 put {
   url: {{base_url}}/todos/{{todo_id}}
   body: json
-  auth: none
+  auth: inherit
 }
 
 body:json {
   {
-    "id": 39,
-    "title": "My Todo",
-    "description": "A little more about what needs doing.",
-    "createdAt": "2024-10-15T16:13:48.310Z",
-    "updatedAt": "2024-10-15T16:13:48.310Z",
-    "status": "complete",
-    "dueDate": "2024-10-15T16:13:36.294Z"
+    "todo": {
+      "id": 39,
+      "title": "My Todo",
+      "description": "A little more about what needs doing.",
+      "createdAt": "2024-10-15T16:13:48.310Z",
+      "updatedAt": "2024-10-15T16:13:48.310Z",
+      "status": "complete",
+      "dueDate": "2024-10-15T16:13:36.294Z"
+    }
   }
 }
