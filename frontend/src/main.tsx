@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 const router = createBrowserRouter([
   {
-    path: "/todos",
+    path: "/",
     element: <Todos />,
     errorElement: <ErrorPage />,
   },
