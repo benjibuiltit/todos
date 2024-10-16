@@ -29,22 +29,24 @@ export default function Todos() {
   });
 
   const filteredTodos = todosQuery.data
-    ?.filter((todo) => {
+    ?.filter((todo: { status: "pending" | "complete" }) => {
       return (
         (statusFilter !== "all" && todo.status === statusFilter) ||
         statusFilter === "all"
       );
     })
-    .filter((todo) => {
+    .filter((todo: { title: string; description: string }) => {
       return (
         todo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         todo.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
 
-  const sortedTodos = filteredTodos?.sort((a, b) => {
-    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-  });
+  const sortedTodos = filteredTodos?.sort(
+    (a: { dueDate: Date }, b: { dueDate: Date }) => {
+      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+    }
+  );
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -113,21 +115,32 @@ export default function Todos() {
             </div>
           </CardHeader>
           <CardContent>
-            {sortedTodos?.map((todo, i) => {
-              const isLast = i === sortedTodos.length - 1;
-              return (
-                <Fragment key={todo.id}>
-                  <TodoItem
-                    id={todo.id}
-                    status={todo.status}
-                    title={todo.title}
-                    description={todo.description}
-                    dueDate={todo.dueDate}
-                  />
-                  {!isLast && <Separator />}
-                </Fragment>
-              );
-            })}
+            {sortedTodos?.map(
+              (
+                todo: {
+                  id: number;
+                  status: string;
+                  title: string;
+                  description: string;
+                  dueDate: string;
+                },
+                i: number
+              ) => {
+                const isLast = i === sortedTodos.length - 1;
+                return (
+                  <Fragment key={todo.id}>
+                    <TodoItem
+                      id={todo.id}
+                      status={todo.status}
+                      title={todo.title}
+                      description={todo.description}
+                      dueDate={todo.dueDate}
+                    />
+                    {!isLast && <Separator />}
+                  </Fragment>
+                );
+              }
+            )}
           </CardContent>
         </Card>
       </main>
