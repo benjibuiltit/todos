@@ -1,6 +1,3 @@
-require "json"
-require "active_support/core_ext/string/inflections"
-
 class JSONAPI
     def initialize(app)
         @app = app
