@@ -3,7 +3,7 @@ class TodosController < ApplicationController
 
   # GET /todos
   def index
-    @todos = Todo.all
+    @todos = Todo.where(:user_id => @current_user.id)
 
     render json: @todos
   end
@@ -16,6 +16,7 @@ class TodosController < ApplicationController
   # POST /todos
   def create
     @todo = Todo.new(todo_params)
+    @todo.user_id = @current_user.id
 
     if @todo.save
       render json: @todo, status: :created, location: @todo
@@ -26,16 +27,24 @@ class TodosController < ApplicationController
 
   # PATCH/PUT /todos/1
   def update
-    if @todo.update(todo_params)
-      render json: @todo
+    if @todo.user_id == @current_user.id
+      if @todo.update(todo_params)
+        render json: @todo
+      else
+        render json: @todo.errors, status: :unprocessable_entity
+      end
     else
-      render json: @todo.errors, status: :unprocessable_entity
+      render json: { error: 'Not Found' }, status: :not_found
     end
   end
 
   # DELETE /todos/1
   def destroy
-    @todo.destroy!
+    if @todo.user_id == @current_user.id
+      @todo.destroy!
+    else
+      render json: { error: 'Not Found' }, status: :not_found
+    end
   end
 
   private
@@ -46,6 +55,6 @@ class TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.require(:todo).permit(:title, :description, :status, :due_date)
+      params.require(:todo).permit(:title, :description, :status, :due_date, :user_id)
     end
 end

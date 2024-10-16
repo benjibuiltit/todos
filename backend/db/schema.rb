@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_16_103748) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_16_131849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_103748) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.datetime "due_date", precision: nil
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_todos_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,4 +31,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_103748) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "todos", "users"
 end
