@@ -19,10 +19,17 @@ import { getTodos } from "@/api";
 import { SetTodo } from "@/components/todos/SetTodo";
 import { StatusFilters } from "@/components/todos/StatusFilters";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Todos() {
   const [statusFilter, setStatusFilter] = useState("pending");
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  function logOut() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
   const todosQuery = useQuery({
     queryKey: ["todos"],
     queryFn: getTodos,
@@ -88,10 +95,7 @@ export default function Todos() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logOut}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

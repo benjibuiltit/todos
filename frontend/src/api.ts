@@ -7,6 +7,16 @@ const client = axios.create({
   },
 });
 
+client.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
 export const getTodos = async function() {
     const response = await client.get('/todos')
     return response.data
@@ -23,4 +33,12 @@ export const updateTodo = async function(todo: any) {
 
 export const deleteTodo = async function(id: number) {
     return client.delete(`/todos/${id}`)
+}
+
+export const signup = async function({username, password}: {username: string, password: string}) {
+    return client.post('/users', { user: { username, password } })
+}
+
+export const login = async function({ username, password}: {username: string, password: string}) {
+    return client.post('/auth/login', { username, password })
 }
